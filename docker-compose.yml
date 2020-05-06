@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  app: &app
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+      args:
+        RUBY_VERSION: '2.7.1'
+        BUNDLER_VERSION: '2.1.4'
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app:cached
+      - ./docker/app/rails_cache:/app/tmp/cache
+      - ./docker/app/bundle:/usr/local/bundle
+    environment:
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - BOOTSNAP_CACHE_DIR=/bundle/bootsnap
+      - WEB_CONCURRENCY=1
+      - HISTFILE=/app/log/.bash_history
+    tmpfs:
+      - /tmp
+    ports:
+      - '3000:3000'

@@ -1,0 +1,14 @@
+.git
+.idea
+
+log
+tmp
+dump
+
+# Ignore docker volumes
+/docker/app/rails_cache
+/docker/app/bundle
+
+/storage/*
+!/storage/.keep
+.byebug_history
